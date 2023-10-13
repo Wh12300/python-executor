@@ -85,48 +85,37 @@ def update_line_numbers(event=None):
     line_count = len(lines)
     line_numbers.configure(state='normal')
     line_numbers.delete("1.0", "end")
-    line_numbers.insert("1.0", "\n".join(str(i) for i in range(1, line_count + 1)))
+    line_numbers.insert("1.0", "\n".join(str(i) for i in range(1, line_count + 1))
     line_numbers.configure(state='disabled')
-    # Auto-scroll the line numbers to the same position as code_input
     code_y_offset = code_input.yview()[0]
     line_numbers.yview_moveto(code_y_offset)
 
-# Create the main window
 root = tk.Tk()
 root.title("Python Executor")
 
-# Create a menu bar
 menu = tk.Menu(root)
 root.config(menu=menu)
 
-# Create a "File" menu
 file_menu = tk.Menu(menu)
 menu.add_cascade(label="File", menu=file_menu)
 file_menu.add_command(label="Open", command=open_file)
 file_menu.add_command(label="Save", command=save_file)
 
-# Create a Text widget for code input
 code_input = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=40, height=15)
 code_input.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
 code_input.bind("<KeyRelease>", update_line_numbers)
 
-# Create a button to execute code
 execute_button = ttk.Button(root, text="Run", command=execute_code)
 execute_button.grid(row=1, column=1)
 
-# Create a Text widget for output
 output_text = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=40, height=15)
 output_text.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 output_text.configure(state='disabled')
 
-# Create a Text widget for line numbers
 line_numbers = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=3, height=15)
 line_numbers.grid(row=0, column=3, rowspan=3, padx=(0, 10))
 line_numbers.configure(state='disabled')
 
-# ... (Previous code)
-
-# Create a button to open the terminal
 open_terminal_button = ttk.Button(root, text="Open Terminal", command=open_terminal)
 open_terminal_button.grid(row=1, column=2, padx=10)
 
